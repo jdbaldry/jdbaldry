@@ -1,4 +1,5 @@
-pages = index.html questions/01-dingbats.html
+srcs = index.html $(wildcard questions/*.md)
+pages = $(srcs:.md=.html)
 
 all: $(pages)
 
