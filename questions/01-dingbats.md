@@ -55,3 +55,5 @@
 ```
     ABCDEFGHIJKLMNOPQRSTVWXYZ
 ```
+
+| [home](../index.html) | [next](02-palindromes.html) |
