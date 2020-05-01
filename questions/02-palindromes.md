@@ -24,4 +24,4 @@ What is the name of a narrow boat propelled by means of a double-bladed paddle?
 ## 8. 
 What is the name of the detection system that uses radio waves, often used in speed guns?
 
-| [prev](01-dingbats.html) | [home](../index.html) | [next](03-general-knowledge.html) |
+| [prev](01-dingbats.html) | [home](../index.html) | [next](03-general-knowledge.html)

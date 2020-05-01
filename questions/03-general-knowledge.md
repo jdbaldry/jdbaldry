@@ -30,4 +30,4 @@ In sailing, does _starboard_ refer to the left or the right?
 ## 10.
 Who wrote _Nineteen Eighty-Four_?
 
-| [prev](02-palindromes.html) | [home](../index.html) |
+| [prev](02-palindromes.html) | [home](../index.html)
