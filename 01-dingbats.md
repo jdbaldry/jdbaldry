@@ -1,16 +1,16 @@
 # Dingbats
 
-1.
+## 1.
 ```
     ME  JUST  YOU
 ```
-2.
+## 2.
 ```
    GROUND
 
    LONDON
 ```
-3.
+## 3.
 ```
     STEP
 
@@ -18,40 +18,40 @@
 
     PETS
 ```
-4.
+## 4.
 ```
     C C C C C C C
 ```
-5.
+## 5.
 ```
     T
     O
     W
     N
 ```
-6.
+## 6.
 ```
     MIL1LION
 ```
-7.
+## 7.
 ```
       GROUND
     FEET  FEET
     FEET  FEET
     FEET  FEET
 ```
-8.
+## 8.
 ```
     LITTLE LITTLE
     LATE   LATE
 ```
-9.
+## 9.
 ```
     X I ST
       N
       G
 ```
-10.
+## 10.
 ```
     ABCDEFGHIJKLMNOPQRSTVWXYZ
 ```
