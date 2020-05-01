@@ -1,4 +1,4 @@
-pages = questions/01-dingbats.html
+pages = index.html questions/01-dingbats.html
 
 all: $(pages)
 
