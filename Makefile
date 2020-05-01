@@ -11,7 +11,7 @@ pages = $(srcs:.md=.html)
 all: $(pages)
 
 %.html: %.md
-	pandoc -o $@ $<
+	pandoc -s --css "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" -o $@ $<
 	rm $<
 
 %.md: quiz.jsonnet
