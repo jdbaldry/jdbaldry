@@ -5,9 +5,10 @@ local md = {
       for field in std.objectFields(obj)
     ] + ['---\n']
   ),
-  heading(str, level)::
-    local prefix = ['' + '#' for i in std.range(1, level)];
-    std.join('', prefix) + ' ' + str + '\n',
+  heading(str, level, monospace=false)::
+    if monospace then '<h%d style="font-family: monospace">%s</h%d' % [level, str, level] else
+      (local prefix = ['' + '#' for i in std.range(1, level)];
+       std.join('', prefix) + ' ' + str + '\n'),
   link(title, url):: '[%s](%s)' % [title, url],
   ul(list):: std.join('\n', std.map(function(e) '- %s' % e)) + '\n',
   ol(list):: std.join('\n', std.mapWithIndex(function(i, e) '%d. %s' % [i + 1, e], list)) + '\n',
@@ -49,12 +50,7 @@ local data = {
       link: 'questions/dingbats.html',
       questions: [
         {
-          q: |||
-
-            ```
-              ME  JUST  YOU
-            ```
-          |||,
+          q: 'ME JUST YOU',
           a: 'just between me and you',
         },
         {
@@ -241,43 +237,43 @@ local data = {
       name: 'Songs',
       questions: [
         {
-          q: "('20s) Common love isn't for us. We created something phenomenal.",
+          q: "('20s)\nCommon love isn't for us. We created something phenomenal.",
           a: 'Physical, Dua Lipa',
         },
         {
-          q: "('10s) Baby, I like your style. Grips on your waist.",
+          q: "('10s)\nBaby, I like your style. Grips on your waist.",
           a: 'One Dance, Drake',
         },
         {
-          q: "('00s) I remember when. I remember, I remember when I lost my mind.",
+          q: "('00s)\nI remember when. I remember, I remember when I lost my mind.",
           a: 'Crazy, Gnarles Barkley',
         },
         {
-          q: "('90s) Load up on guns, bring your friends. It's fun to lose and to pretend.",
+          q: "('90s)\nLoad up on guns, bring your friends. It's fun to lose and to pretend.",
           a: 'Smells like Teen Spirit, Nirvana',
         },
         {
-          q: "('80s) It's like a jungle sometimes. It makes me wonder how I keep from goin' under.",
+          q: "('80s)\nIt's like a jungle sometimes. It makes me wonder how I keep from goin under.",
           a: 'The Message, Grandmaster Flash',
         },
         {
-          q: "('70s) When you're weary, feeling small. When tears are in your eyes, I will dry them all.",
+          q: "('70s)\nWhen you're weary, feeling small. When tears are in your eyes, I will dry them all.",
           a: 'Bridge over Troubled Water, Simon and Garfunkel',
         },
         {
-          q: "('60s) I thought love was only true in fairy tales. Meant for someone else but not for me.",
+          q: "('60s)\nI thought love was only true in fairy tales. Meant for someone else but not for me.",
           a: 'Believe, The Monkees',
         },
         {
-          q: "('50s) You shake my nerves and you rattle my brain. Too much love drives a man insane.",
+          q: "('50s)\nYou shake my nerves and you rattle my brain. Too much love drives a man insane.",
           a: 'Great Balls of Fire, Jerry Lee Lewis',
         },
         {
-          q: "('40s) Oh, the weather outside is frightful. But the fire is so delightful.",
+          q: "('40s)\nOh, the weather outside is frightful. But the fire is so delightful.",
           a: 'Let it Snow, Bing Crosby',
         },
         {
-          q: "('30s) Have you seen the well to do. Up and down Park Avenue.",
+          q: "('30s)\nHave you seen the well to do. Up and down Park Avenue.",
           a: "Puttin' on the Ritz, Fred Astaire",
         },
       ],
@@ -336,17 +332,24 @@ local data = {
       md.pandocTitle({ title: data.name }),
     ] + [
       md.manifestDocument(
-        [
-          md.heading(round.name, 2),
-        ] +
         std.mapWithIndex(
-          function(i, e) (
-            md.heading('%02d. %s' % [i + 1, e.q], 3)
+          function(i, r) (
+            md.heading(r.name, 2) +
+            if i == 0 then '' else (
+              md.manifestDocument(
+                std.mapWithIndex(
+                  function(i, e) (
+                    md.heading('%02d. %s' % [i + 1, e.q], 3)
+                  ),
+                  r.questions
+                )
+              )
+            )
+
           ),
-          round.questions
+          data.rounds,
         ),
-      )
-      for round in data.rounds
+      ),
     ]
   ),
 }
