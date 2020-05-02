@@ -168,12 +168,17 @@ In sailing, does _starboard_ refer to the left or the right?
 Who wrote _Nineteen Eighty-Four_?
 
 ## Songs
+
 Guess the song from the release decade and the first two lines.
 
 ### 01. ('20s)
 Common love isn't for us. 
 
 We created something phenomenal.
+
+<aside class="notes">
+  Physical, Dua Lipa
+</aside>
 
 ### 02. ('10s)
 Baby, I like your style. 
@@ -254,7 +259,7 @@ In which English city is _Peaky Blinders_ set?
 Who is the current presenter of _Antiques Roadshow_?
 
 ## Scavenger Hunt
-First one to find and return with the item described
+First one to find and return with the item described gets the point!
 
 ### 01.
 Something the size of a mouse
