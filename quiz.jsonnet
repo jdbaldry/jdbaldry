@@ -1,18 +1,48 @@
 local md = {
+  pandocTitle(obj):: self.manifestDocument(
+    ['---'] + [
+      '%s: %s' % [field, obj[field]]
+      for field in std.objectFields(obj)
+    ] + ['---\n']
+  ),
   heading(str, level)::
     local prefix = ['' + '#' for i in std.range(1, level)];
     std.join('', prefix) + ' ' + str + '\n',
   link(title, url):: '[%s](%s)' % [title, url],
+  ul(list):: std.join('\n', std.map(function(e) '- %s' % e)) + '\n',
+  ol(list):: std.join('\n', std.mapWithIndex(function(i, e) '%d. %s' % [i + 1, e], list)) + '\n',
   paragraph(str):: str + '\n',
   manifestDocument(lines):: std.join('\n', lines),
 };
 
+local quiz = {
+  new(name, description=null): {
+    name: name,
+    withRounds(rounds):: self + {
+      rounds: rounds,
+    },
+  },
+};
+
+local round = {
+  new(name):: {
+    name: name,
+    safe_name:: std.strReplace(' ', '-', std.toLower(self.name)),
+    link:: 'rounds/%s.html' % self.safe_name,
+    withQuestions(questions):: self + {
+      questions: questions,
+    },
+  },
+};
+
+local question(question, answer) = {
+  question: question,
+  answer: answer,
+};
+
 local data = {
   name: 'Quiz',
-  description: |||
-    Welcome to Alisha and Jack's quiz!
-    Each round has its own page which can be reached using the links below.
-  |||,
+  description: "Welcome to Alisha and Jack's quiz!",
   rounds: [
     {
       name: 'Dingbats',
@@ -163,7 +193,7 @@ local data = {
       ],
     },
     {
-      name: 'GeneralKnowledge',
+      name: 'General Knowledge',
       questions: [
         {
           q: 'In what year was the first Toy Story released?',
@@ -303,24 +333,23 @@ local data = {
 {
   'index.md': md.manifestDocument(
     [
-      md.heading(data.name, 1),
-      md.paragraph(data.description),
-    ] + std.mapWithIndex(
-      function(i, e) md.heading(md.link('%02d - %s' % [i + 1, e.name], 'questions/%s.html' % e.name), 2),
-      data.rounds,
-    )
-  ),
-} + {
-  ['questions/%s.md' % round.name]: md.manifestDocument(
-    [md.heading(round.name, 1)] +
-    (if std.objectHas(round, 'description') then
-       [md.paragraph(round.description)]
-     else []) + std.mapWithIndex(
-      function(i, e) md.heading('%d. %s' % [i + 1, e.q], 2),
-      round.questions,
-    ) + [
-      md.link('home', '../index.html'),
+      md.pandocTitle({ title: data.name }),
+    ] + [
+      md.manifestDocument(
+        std.mapWithIndex(function(i, e)
+          (md.heading('%s [%d]' % [data.rounds[0].name, i + 1], 2) +
+           md.heading(e.q, 3)), data.rounds[0].questions)
+      ),
+    ] +
+
+    [
+      md.manifestDocument(
+        [
+          md.heading(round.name, 2),
+          md.ol([question.q for question in round.questions]),
+        ]
+      )
+      for round in data.rounds[1:]
     ],
-  )
-  for round in data.rounds
+  ),
 }

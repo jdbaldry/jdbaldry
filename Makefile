@@ -3,16 +3,19 @@
 SHELL       := bash
 .SHELLFLAGS := -euf -o pipefail -c
 MAKEFLAGS   += --warn-undefined-variables
-MAKEFLAGS   += --no-builtin-rules
+MAKEFLAGS   += --no-builtin-rule
 
 srcs  = $(shell jsonnet -Se "std.join(' ', std.objectFields(import 'quiz.jsonnet'))")
 pages = $(srcs:.md=.html)
 
 all: $(pages)
 
+# index.html: index.md
+# 	pandoc -s --css "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" -o $@ $<
+# 	rm $<
+
 %.html: %.md
-	pandoc -s --css "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" -o $@ $<
-	rm $<
+	pandoc -s -i -t slidy -o $@ $<
 
 %.md: quiz.jsonnet
 	jsonnet -Se "(import '$<')['$@']" > $@
