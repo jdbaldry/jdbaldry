@@ -336,20 +336,17 @@ local data = {
       md.pandocTitle({ title: data.name }),
     ] + [
       md.manifestDocument(
-        std.mapWithIndex(function(i, e)
-          (md.heading('%s [%d]' % [data.rounds[0].name, i + 1], 2) +
-           md.heading(e.q, 3)), data.rounds[0].questions)
-      ),
-    ] +
-
-    [
-      md.manifestDocument(
         [
           md.heading(round.name, 2),
-          md.ol([question.q for question in round.questions]),
-        ]
+        ] +
+        std.mapWithIndex(
+          function(i, e) (
+            md.heading('%02d. %s' % [i + 1, e.q], 3)
+          ),
+          round.questions
+        ),
       )
-      for round in data.rounds[1:]
-    ],
+      for round in data.rounds
+    ]
   ),
 }
