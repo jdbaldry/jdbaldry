@@ -8,7 +8,7 @@ MAKEFLAGS   += --no-builtin-rule
 all: index.html
 
 %.html: %.md
-	pandoc -s -i --slide-level 3 -t revealjs -V simple -V revealjs-url=https://revealjs.com -o $@ $<
+	pandoc -s -i --slide-level 3 -t revealjs -V theme=blood -V simple -V revealjs-url=https://revealjs.com -o $@ $<
 
 %.md: quiz.jsonnet
 	jsonnet -Se "(import '$<')['$@']" > $@
